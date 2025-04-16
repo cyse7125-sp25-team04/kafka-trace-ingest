@@ -1,1 +1,3 @@
 confluent-kafka
+pdfplumber
+google-cloud-storage

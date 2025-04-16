@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from confluent_kafka import Consumer, KafkaError, KafkaException
+from pinecone_processor import push_to_pinecone
 import os
-import json
 import logging
 import time
 import sys
@@ -57,7 +57,7 @@ def create_consumer():
             attempt += 1
 
 consumer = create_consumer()
-consumer.subscribe([TOPIC])
+# consumer.subscribe([TOPIC])
 
 # Thread pool for processing messages
 executor = ThreadPoolExecutor(max_workers=5)
@@ -69,17 +69,17 @@ def rebalance_cb(consumer, partitions):
 consumer.subscribe([TOPIC], on_assign=rebalance_cb)
 
 # Process message and handle errors
-def push_to_pinecone(message):
-    try:
-        # Decode and process message
-        decoded_message = message.decode('utf-8')
-        logger.info(f"Processing message: {decoded_message}")
-        # Simulate Pinecone processing (replace with actual Pinecone logic)
-        time.sleep(0.1)  # Placeholder for processing time
-        return True
-    except Exception as e:
-        logger.error(f"Error processing message: {e}")
-        return False
+# def push_to_pinecone(message):
+#     try:
+#         # Decode and process message
+#         decoded_message = message.decode('utf-8')
+#         logger.info(f"Processing message: {decoded_message}")
+#         # Simulate Pinecone processing (replace with actual Pinecone logic)
+#         time.sleep(0.1)  # Placeholder for processing time
+#         return True
+#     except Exception as e:
+#         logger.error(f"Error processing message: {e}")
+#         return False
 
 # Main consumer loop
 def consume_messages():
